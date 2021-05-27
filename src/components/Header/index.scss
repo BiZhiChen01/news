@@ -1,0 +1,48 @@
+.header {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #F5A623;
+    .container{
+        .header-logo {
+            h1 {
+                font-size: 24px;
+                color: #fff;
+                font-weight: 600;
+            }
+        }
+        .header-tab {
+            margin-left: 100px;
+
+            .tab {
+                width: 100px;
+                height: 100%;
+                text-align: center;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all .3s;
+                
+                a {
+                    display: inline-block;
+                    width: 100%;
+                    height: 100%;
+                    color: #ffffffbd;
+                }
+                &:hover {
+                    background-color: #0000000a;
+
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+            .active {
+                background-color: #0000000a;
+
+                a {
+                    color: #fff;
+                }
+            }
+        }
+    }
+}

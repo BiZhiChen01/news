@@ -1,10 +1,12 @@
 import './imports.js';
 
 import Header from '../components/Header';
+import NewsIframe from '../components/Iframe';
 
 ;((doc) => {
 
-    const oApp = doc.querySelector('#app');
+    const oApp = doc.querySelector('#app'),
+          currentNews = JSON.parse(localStorage.getItem('currentNews'));
 
     const init = () => {
         render();
@@ -18,8 +20,9 @@ import Header from '../components/Header';
             collectionsAcive: false,
             isDetail: true
         });
+        const newsIframTpl = NewsIframe.tpl(currentNews.url);
 
-        oApp.innerHTML += headerTpl;
+        oApp.innerHTML += headerTpl + newsIframTpl;
     }
 
     function bindEvent() {

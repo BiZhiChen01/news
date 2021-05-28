@@ -63,8 +63,8 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|jpg|jpeg|gif|ico|svg|ttf|woff|eot)$/i,
-                loaders: 'url-loader&limiit=1024&name=img/[name]-[hash:16].[ext]'
+                test: /\.(png|jpg|jpeg|gif|ico|svg|ttf|woff|woff2|eot)$/i,
+                loaders: 'url-loader?limit=1024&name=img/[name]-[hash:16].[ext]'
             }
         ]
     },

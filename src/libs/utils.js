@@ -17,7 +17,14 @@ function setDataPage(data, count) {
     return pageData;
 }
 
+function scrollToTop() {
+    setTimeout(() => {
+        window.scrollTo(0, 0);
+    }, 0);
+}
+
 export {
     tplReplace,
-    setDataPage
+    setDataPage,
+    scrollToTop
 }

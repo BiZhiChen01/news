@@ -2,7 +2,7 @@ import itemTpl from './tpl/item.tpl';
 import wrapperTpl from './tpl/listWrapper.tpl';
 import './index.scss';
 
-import { tplReplace } from '../../libs/utils';
+import { scrollToTop, tplReplace } from '../../libs/utils';
 
 export default {
     name: 'NavBar',
@@ -25,9 +25,11 @@ export default {
     bindEvent(setType) {
         const oWrapper = document.querySelector('.nav-wrapper'),
               oItems = oWrapper.querySelectorAll('.nav-item'),
-              oLine = oWrapper.querySelector('.line');
+              oLine = oWrapper.querySelector('.line'),
+              oTop = oWrapper.querySelector('.top');
 
         oWrapper.addEventListener('click', this._changeType.bind(this, oItems, oLine, setType), false);
+        oTop.addEventListener('click', this._goToTop, false);
     },
     _changeType(items, line, setType) {
         const target = arguments[3].target,
@@ -36,11 +38,15 @@ export default {
         if (className === 'nav-item') {
             const type = target.dataset.type;
             setType(type);
-            
+            scrollToTop();
+
             items[this._index].className = 'nav-item',
             this._index = [].indexOf.call(items, target);
             items[this._index].className += ' active';
             line.style.left = (this._index * 100) + 'px';
         }
+    },
+    _goToTop() {
+        scrollToTop();
     }
 }

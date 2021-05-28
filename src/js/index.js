@@ -25,8 +25,12 @@ import NewsList from '../components/NewsList';
 
     const init = async () => {
         render();
-        await getNewsList();
         bindEvent();
+        await getNewsList();
+    }
+
+    function bindEvent() {
+        NavBar.bindEvent(setType);
     }
 
     function render() {
@@ -53,10 +57,6 @@ import NewsList from '../components/NewsList';
 
         oNewsWrapper.innerHTML += newsItemTpl;
         NewsList.imgShow();
-    }
-
-    function bindEvent() {
-        NavBar.bindEvent(setType);
     }
 
     async function getNewsList() {

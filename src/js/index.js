@@ -2,21 +2,25 @@ import './imports.js';
 
 import { NEWS_TYPE } from '../data';
 import api from '../models';
+import { scrollToBottom } from '../libs/utils.js';
 
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import NewsList from '../components/NewsList';
+import MoreLoading from '../components/MoreLoading';
 
 ;((doc) => {
 
     const oApp = doc.querySelector('#app');
     
-    let oNewsWrapper = '';
+    let oNewsWrapper = '',
+        t = '';
 
     const config = {
         type: 'top',
         count: 10,
-        pageNum: 0
+        pageNum: 0,
+        isLoading: false
     }
 
     const newsData = {
@@ -31,6 +35,7 @@ import NewsList from '../components/NewsList';
 
     function bindEvent() {
         NavBar.bindEvent(setType);
+        window.addEventListener('scroll', scrollToBottom.bind(null, getMoreNewsList), false);
     }
 
     function render() {
@@ -55,8 +60,10 @@ import NewsList from '../components/NewsList';
             pageNum
         });
 
+        MoreLoading.remove(oNewsWrapper);
         oNewsWrapper.innerHTML += newsItemTpl;
         NewsList.imgShow();
+        config.isLoading = false;
     }
 
     async function getNewsList() {
@@ -74,8 +81,27 @@ import NewsList from '../components/NewsList';
     function setType(type) {
         config.type = type;
         config.pageNum = 0;
+        config.isLoading = false;
         getNewsList();
         oNewsWrapper.innerHTML = '';
+    }
+
+    function getMoreNewsList() {
+        if (!config.isLoading) {
+            config.pageNum ++;
+            const { type, pageNum } = config;
+            clearTimeout(t);
+
+            if (pageNum >= newsData[type].length) {
+                MoreLoading.add(oNewsWrapper, false);
+            } else {
+                config.isLoading = true;
+                MoreLoading.add(oNewsWrapper, true);
+                t = setTimeout(() => {
+                    getNewsList();
+                }, 1000);
+            }
+        }
     }
 
     init();

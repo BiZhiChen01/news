@@ -15,7 +15,6 @@ export default {
                 type,
                 title
             });
-            console.log(listwrapper);
         });
 
         return tplReplace(wrapperTpl, {

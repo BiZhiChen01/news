@@ -115,6 +115,15 @@ module.exports = {
         },
         open: true,
         host: 'localhost',
-        port: '10001'
+        port: '10001',
+        proxy: {
+            "/api": {
+                target: 'http://v.juhe.cn',
+                changeOrigin: true,
+                pathRewrite: {
+                    "^/api": ''
+                }
+            }
+        }
     }
 }

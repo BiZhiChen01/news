@@ -5,19 +5,27 @@ import api from '../models';
 
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
+import NewsList from '../components/NewsList';
 
 ;((doc) => {
 
     const oApp = doc.querySelector('#app');
+    
+    let oNewsWrapper = '';
 
     const config = {
         type: 'top',
-        count: 10
+        count: 10,
+        pageNum: 0
+    }
+
+    const newsData = {
+
     }
 
     const init = async () => {
         render();
-        //await getNewsList();
+        await getNewsList();
         bindEvent();
     }
 
@@ -29,8 +37,21 @@ import NavBar from '../components/NavBar';
             isDetail: false
         });
         const navBarTpl = NavBar.tpl(NEWS_TYPE);
+        const newsWrapper = NewsList.wrapperTpl();
 
-        oApp.innerHTML += headerTpl + navBarTpl;
+        oApp.innerHTML += (headerTpl + navBarTpl + newsWrapper);
+        oNewsWrapper = oApp.querySelector('.news-list');
+    }
+
+    function renderList(data) {
+        const { pageNum } = config;
+
+        const newsItemTpl = NewsList.listItemTpl({
+            data,
+            pageNum
+        });
+
+        oNewsWrapper.innerHTML += newsItemTpl;
     }
 
     function bindEvent() {
@@ -38,9 +59,15 @@ import NavBar from '../components/NavBar';
     }
 
     async function getNewsList() {
-        const { type, count } = config;
-        const result = await api.getNewsList(type, count);
-        console.log(result);
+        const { type, count, pageNum } = config;
+    
+        if (newsData[type]) {
+            renderList(newsData[type][pageNum]);
+            return;
+        }
+
+        newsData[type] = await api.getNewsList(type, count);
+        renderList(newsData[type][pageNum]);
     }
 
     init();

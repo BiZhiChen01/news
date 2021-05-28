@@ -1,6 +1,9 @@
 import './imports.js';
 
+import { NEWS_TYPE } from '../data';
+
 import Header from '../components/Header';
+import NavBar from '../components/NavBar';
 
 ;((doc) => {
 
@@ -18,8 +21,9 @@ import Header from '../components/Header';
             collectionsAcive: false,
             isDetail: false
         });
+        const navBarTpl = NavBar.tpl(NEWS_TYPE);
 
-        oApp.innerHTML += headerTpl;
+        oApp.innerHTML += headerTpl + navBarTpl;
     }
 
     function bindEvent() {

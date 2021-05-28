@@ -52,10 +52,11 @@ import NewsList from '../components/NewsList';
         });
 
         oNewsWrapper.innerHTML += newsItemTpl;
+        NewsList.imgShow();
     }
 
     function bindEvent() {
-
+        NavBar.bindEvent(setType);
     }
 
     async function getNewsList() {
@@ -68,6 +69,13 @@ import NewsList from '../components/NewsList';
 
         newsData[type] = await api.getNewsList(type, count);
         renderList(newsData[type][pageNum]);
+    }
+
+    function setType(type) {
+        config.type = type;
+        config.pageNum = 0;
+        getNewsList();
+        oNewsWrapper.innerHTML = '';
     }
 
     init();

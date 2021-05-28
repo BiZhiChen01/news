@@ -17,7 +17,6 @@ export default {
             tpl = '';
 
         data.map((item, index) => {
-            console.log(item);
             if (!item.thumbnail_pic_s) {
                 tpl = item0Tpl;
             } else if (item.thumbnail_pic_s && !item.thumbnail_pic_s02) {
@@ -46,7 +45,11 @@ export default {
         return list;
     },
     imgShow() {
-        const oImgs = document.querySelectorAll('.img');
-        
+        const oImgs = document.querySelectorAll('img');
+        [...oImgs].map((img) => {
+            img.onload = function () {
+                img.style.opacity = '1';
+            }
+        });
     }
 }

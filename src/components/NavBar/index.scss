@@ -10,6 +10,7 @@
             box-shadow: 0 5px 10px #d4d4d4;
     
             .nav-item {
+                float: left;
                 width: 100px;
                 text-align: center;
                 font-size: 16px;
@@ -27,6 +28,7 @@
                 display: inline-block;
                 width: 100px;
                 border-bottom: 2px solid #F5A623;
+                transition: left .3s;
             }
             .active {
                 color: #F5A623;

@@ -51,6 +51,7 @@ import MoreLoading from '../components/MoreLoading';
 
         oApp.innerHTML += (headerTpl + navBarTpl + newsWrapper);
         oNewsWrapper = oApp.querySelector('.news-list');
+        minHeight();
     }
 
     function renderList(data) {
@@ -109,6 +110,10 @@ import MoreLoading from '../components/MoreLoading';
                 }, 1000);
             }
         }
+    }
+
+    function minHeight() {
+        oNewsWrapper.style.minHeight = doc.documentElement.clientHeight + 'px';
     }
 
     init();

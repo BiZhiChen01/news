@@ -2,6 +2,7 @@ import './imports.js';
 
 import Header from '../components/Header';
 import NewsList from '../components/NewsList';
+import NoDataTip from '../components/NoDataTip';
 
 ;((doc) => {
 
@@ -25,9 +26,12 @@ import NewsList from '../components/NewsList';
 
         if (followedList.length) {
             const wrappertpl = NewsList.wrapperTpl();
-            oApp.innerHTML += headerTpl + wrappertpl;
+            oApp.innerHTML += (headerTpl + wrappertpl);
             oWrapperList = oApp.querySelector('.news-list');
             renderList(followedList)
+        } else {
+            const noDataTipTpl = NoDataTip.tpl('您还没有收藏新闻！');
+            oApp.innerHTML += (headerTpl + noDataTipTpl);
         }
     }
 

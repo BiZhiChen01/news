@@ -48,5 +48,15 @@ export default {
     },
     _goToTop() {
         scrollToTop();
+    },
+    NavBarScroll() {
+        let oNavBar = document.querySelector('.nav-wrapper'),
+            dy = document.documentElement.scrollTop;
+
+        if (dy < 80) {
+            oNavBar.style.top = (80 - dy) + 'px';
+        } else {
+            oNavBar.style.top = '5px';
+        }
     }
 }

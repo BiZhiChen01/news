@@ -37,6 +37,7 @@ import MoreLoading from '../components/MoreLoading';
     function bindEvent() {
         NavBar.bindEvent(setType);
         NewsList.bindEvent(oNewsWrapper, setCurrentNews);
+        window.addEventListener('scroll', NavBar.NavBarScroll, false);
         window.addEventListener('scroll', scrollToBottom.bind(null, getMoreNewsList), false);
     }
 

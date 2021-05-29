@@ -7,6 +7,7 @@ import { scrollToBottom } from '../libs/utils.js';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import NewsList from '../components/NewsList';
+import Loading from '../components/Loading';
 import MoreLoading from '../components/MoreLoading';
 
 ;((doc) => {
@@ -61,31 +62,32 @@ import MoreLoading from '../components/MoreLoading';
             data,
             pageNum
         });
-
+        
         MoreLoading.remove(oNewsWrapper);
         oNewsWrapper.innerHTML += newsItemTpl;
-        NewsList.imgShow();
         config.isLoading = false;
+        NewsList.imgShow();
     }
 
     async function getNewsList() {
         const { type, count, pageNum } = config;
     
+        Loading.add(oNewsWrapper);
         if (newsData[type]) {
             renderList(newsData[type][pageNum]);
-            return;
+        } else {
+            newsData[type] = await api.getNewsList(type, count);
+            renderList(newsData[type][pageNum]);
         }
-
-        newsData[type] = await api.getNewsList(type, count);
-        renderList(newsData[type][pageNum]);
+        Loading.remove(oNewsWrapper)
     }
 
     function setType(type) {
         config.type = type;
         config.pageNum = 0;
         config.isLoading = false;
-        getNewsList();
         oNewsWrapper.innerHTML = '';
+        getNewsList();
     }
 
     function setCurrentNews(options) {

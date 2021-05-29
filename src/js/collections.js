@@ -2,6 +2,7 @@ import './imports.js';
 
 import Header from '../components/Header';
 import NewsList from '../components/NewsList';
+import Loading from '../components/Loading';
 import NoDataTip from '../components/NoDataTip';
 
 ;((doc) => {
@@ -28,7 +29,8 @@ import NoDataTip from '../components/NoDataTip';
             const wrappertpl = NewsList.wrapperTpl();
             oApp.innerHTML += (headerTpl + wrappertpl);
             oWrapperList = oApp.querySelector('.news-list');
-            renderList(followedList)
+            Loading.add(oWrapperList);
+            renderList(followedList);
         } else {
             const noDataTipTpl = NoDataTip.tpl('您还没有收藏新闻！');
             oApp.innerHTML += (headerTpl + noDataTipTpl);
@@ -41,8 +43,11 @@ import NoDataTip from '../components/NoDataTip';
             pageNum: -1
         });
 
-        oWrapperList.innerHTML += newsItemTpl;
-        NewsList.imgShow();
+        setTimeout(() => {
+            oWrapperList.innerHTML += newsItemTpl;
+            NewsList.imgShow();
+            Loading.remove(oWrapperList);
+        }, 1000)
     }
 
     function bindEvent() {
